@@ -14,8 +14,11 @@ import java.util.List;
  * @author Thiago
  */
 public class Sala {
-    private List<Dados> salas=  new ArrayList<>();
+    public static List<Dados> Dadosalas=  new ArrayList<>();
     private String nome;
+
+    public Sala() {
+    }
 
     public Sala(String nome) {
         this.nome = nome;
@@ -28,15 +31,14 @@ public class Sala {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
-    public List<Dados> getSalas() {
-        return salas;
+
+    public List<Dados> getDadosalas() {
+        return Dadosalas;
     }
 
-    public void setSalas(List<Dados> salas) {
-        this.salas = salas;
+    public void setDadosalas(List<Dados> Dadosalas) {
+        this.Dadosalas = Dadosalas;
     }
-    
-    
+   
          
 }
