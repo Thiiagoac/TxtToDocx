@@ -8,6 +8,7 @@ package txttodocx;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -43,18 +44,26 @@ public class TxtToDocX {
                     + " Senha:" + listas.get(i).getSenha() + "\n");
         }
         z.WriteDocx();
-
+        z.catchNameFiles();
     }
 
     public void catchNameFiles() {
         File Arquivo = null;
         File[] nomeArquivos;
-        
-        try{
+
+        try {
             Arquivo = new File(CaminhoAreaDeTrabalho);
-            nomeArquivos = Arquivo.listFiles();
-            
-        }catch(Exception ex){
+            nomeArquivos = Arquivo.listFiles(new FileFilter() {
+                public boolean accept(File pathname) {
+                    return pathname.getName().toLowerCase().endsWith(".txt");
+                }
+            });
+
+            for (int i = 0; i < nomeArquivos.length; i++) {
+                System.out.println(nomeArquivos[i]);
+            }
+
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -74,7 +83,7 @@ public class TxtToDocX {
                 int matricula;
                 int senha;
                 String serie;
-                
+
                 while ((dados = BW.readLine()) != null) {
                     paraArray = dados.split(";");
 
@@ -88,14 +97,13 @@ public class TxtToDocX {
                 FR.close();
 
             } catch (Exception e) {
-                System.out.println("Deu ruim");
+                System.out.println("Erro");
                 System.out.println(e.getMessage());
                 e.printStackTrace();
             }
 
         } else {
-            System.out.println("Nenhum arquivo de dados encontrado, por favor, "
-                    + "use primeiro a função de SaveGame");
+            System.out.println("Nenhum arquivo de dados encontrado");
         }
 
     }
