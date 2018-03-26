@@ -14,7 +14,7 @@ import java.util.List;
  * @author Thiago
  */
 public class Sala {
-    public static List<Dados> Dadosalas=  new ArrayList<>();
+    private List<Dados> Dadosalas=  new ArrayList<>();
     private String nome;
 
     public Sala() {

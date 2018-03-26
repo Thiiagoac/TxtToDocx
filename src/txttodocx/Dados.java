@@ -12,15 +12,14 @@ package txttodocx;
 public class Dados {
 
     private String serie;
-    private int matricula;
+    private String matricula;
     private String nome;
-    private int senha;
+    private String senha;
 
-    public Dados( int matricula, String nome, int senha) {
+    public Dados(String matricula, String nome, String senha) {
         this.matricula = matricula;
         this.nome = nome;
         this.senha = senha;
-        
     }
 
     public String getSerie() {
@@ -31,11 +30,11 @@ public class Dados {
         this.serie = serie;
     }
 
-    public int getMatricula() {
+    public String getMatricula() {
         return matricula;
     }
 
-    public void setMatricula(int matricula) {
+    public void setMatricula(String matricula) {
         this.matricula = matricula;
     }
 
@@ -47,12 +46,14 @@ public class Dados {
         this.nome = nome;
     }
 
-    public int getSenha() {
+    public String getSenha() {
         return senha;
     }
 
-    public void setSenha(int senha) {
+    public void setSenha(String senha) {
         this.senha = senha;
     }
+    
+    
 
 }
