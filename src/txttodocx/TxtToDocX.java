@@ -8,10 +8,12 @@ package txttodocx;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -30,7 +32,8 @@ public class TxtToDocX {
     public static final String NomeDoUsuario = System.getProperty("user.name");
 
     //DEVE-SE FICAR ATENTO AO CAMINHO DA AREA DE TRABALHO CASO MUDE DE COMPUTADOR PARA COMPUTADOR
-    public static final String CaminhoAreaDeTrabalho = "C:/Users/"+NomeDoUsuario+"/Desktop/";
+    
+    public static final String CaminhoAreaDeTrabalho = "C:\\Users\\" + NomeDoUsuario + "\\Desktop\\";
 
     public static void main(String[] args) throws IOException {
         //Runtime.getRuntime().exec("cmd.exe /C start WINWORD.exe "+CaminhoAreaDeTrabalho+"teste1.docx");
@@ -41,10 +44,13 @@ public class TxtToDocX {
         for (int i = 0; i < nomeArquivos.length; i++) {
             z.LoadTxt(nomeArquivos[i]);
         }
+        z.replaces();
+        
+        
         for (int i = 0; i < nomeArquivos.length; i++) {
             System.out.println(nomeArquivos[i]);
         }
-
+       // z.replaces();
         for (int j = 0; j < salas2.size(); j++) {
             System.out.println("Turma: " + salas2.get(j).getNome());
             for (int i = 0; i < salas2.get(j).getDadosalas().size(); i++) {
@@ -77,6 +83,47 @@ public class TxtToDocX {
         }
     }
 
+    public void replaces() {
+        String nome;
+        for (int j = 0; j < salas2.size(); j++) {
+
+            for (int i = 0; i < salas2.get(j).getDadosalas().size(); i++) {
+                
+                nome = salas2.get(j).getDadosalas().get(i).getNome();
+                nome = nome.replace("á", "a");
+                nome = nome.replace("Á", "A");
+                nome = nome.replace("à", "a");
+                nome = nome.replace("À", "A");
+                nome = nome.replace("ã", "a");
+                nome = nome.replace("Ã", "A");
+                nome = nome.replace("â", "a");
+                nome = nome.replace("Â", "A");
+
+                nome = nome.replace("é", "e");
+                nome = nome.replace("è", "e");
+                nome = nome.replace("ê", "e");
+
+                nome = nome.replace("í", "i");
+                nome = nome.replace("ì", "i");
+                nome = nome.replace("î", "i");
+
+                nome = nome.replace("ó", "o");
+                nome = nome.replace("ò", "o");
+                nome = nome.replace("õ", "o");
+                nome = nome.replace("ô", "o");
+
+                nome = nome.replace("ú", "u");
+                nome = nome.replace("ù", "u");
+                nome = nome.replace("û", "u");
+
+                nome = nome.replace("ç", "c");
+                nome = nome.replace("ñ", "n");
+                salas2.get(j).getDadosalas().get(i).setNome(nome);
+                System.out.println(nome);
+            }
+        }
+    }
+
     public void LoadTxt(File Arquivo) {
         //Dados novoDado = null;
         //File Arquivo = new File(CaminhoAreaDeTrabalho + "Teste.txt");
@@ -85,7 +132,9 @@ public class TxtToDocX {
             try {
 
                 FileReader FR = new FileReader(Arquivo);
-                BufferedReader BW = new BufferedReader(FR);
+                BufferedReader BW = new BufferedReader(new InputStreamReader(new FileInputStream(Arquivo.getAbsolutePath()), "ISO-8859-1"));
+
+                //BufferedReader BW = new BufferedReader(FR);
 
                 String dados;
                 String[] paraArray = new String[3];
@@ -131,8 +180,11 @@ public class TxtToDocX {
         FileOutputStream fileOutPut = null;
         XWPFDocument document = new XWPFDocument();
         Sala z = null;
+         System.out.println(CaminhoAreaDeTrabalho + "Senhas.docx");
         try {
             fileOutPut = new FileOutputStream(new File(CaminhoAreaDeTrabalho + "Senhas.docx"));
+            
+           
 
             XWPFParagraph paragrafo1 = document.createParagraph();
             XWPFRun runPaRun1 = paragrafo1.createRun();
